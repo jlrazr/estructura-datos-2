@@ -4,9 +4,10 @@ public class Proveedor {
     private String descripcion;
     private Pelicula[] peliculas;
     private int numeroPeliculas;
+    private int maxPeliculas = 200;
 
     //Método constructor
-    public Proveedor(String descripcion, int maxPeliculas) {
+    public Proveedor(String descripcion) {
         this.id = ++contador;
         this.descripcion = descripcion;
         this.peliculas = new Pelicula[maxPeliculas];
@@ -33,5 +34,8 @@ public class Proveedor {
     }
 
     // getters
+    public int getNumeroPeliculas() {
+        return numeroPeliculas;
+    }
     // setters
 }

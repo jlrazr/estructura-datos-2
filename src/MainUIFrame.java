@@ -1,5 +1,5 @@
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.DefaultListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -8,9 +8,9 @@ import javax.swing.event.ListSelectionListener;
  * @author Jose Luis Mora
  */
 public class MainUIFrame extends javax.swing.JFrame {
-    
-    // Inicializa el DAO para los gimnasios
-    GimnasioDAO gymDao = new GimnasioDAO();
+
+    // Inicializa la pila de proveedores
+    PilaProveedores pilaProv = new PilaProveedores(5);
 
     /**
      * Creates new form MainUIFrame
@@ -32,7 +32,7 @@ public class MainUIFrame extends javax.swing.JFrame {
         jButton_salir = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel_anadirProveedor = new javax.swing.JPanel();
-        jLabel_nombre_proveedor = new javax.swing.JLabel();
+        jLabel_descripcion_proveedor = new javax.swing.JLabel();
         jTextField_nombre_proveedor = new javax.swing.JTextField();
         jButton_anadir_proveedor = new javax.swing.JButton();
         jPanel_anadir_peliculas = new javax.swing.JPanel();
@@ -46,17 +46,18 @@ public class MainUIFrame extends javax.swing.JFrame {
         jLabel_formato = new javax.swing.JLabel();
         jComboBox_formato = new javax.swing.JComboBox<>();
         jPanel_buscarGimnasios = new javax.swing.JPanel();
-        jLabel_busqueda_nombre = new javax.swing.JLabel();
-        jTextField_busqueda_nombre = new javax.swing.JTextField();
-        jScrollPane_busqueda_gimnasios = new javax.swing.JScrollPane();
-        jList_busqueda_nombre = new javax.swing.JList<>();
-        jButton_buscar_nombre = new javax.swing.JButton();
+        jLabel_remover_proveedor = new javax.swing.JLabel();
+        jButton_remover_proveedor = new javax.swing.JButton();
+        jLabel_remover_info = new javax.swing.JLabel();
         jPanel_busquedaPorClientes = new javax.swing.JPanel();
         jLabel_promedioMinimo = new javax.swing.JLabel();
         jTextField_promedioClientes = new javax.swing.JTextField();
         jButton_filtrarPorPromedio = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList_busqueda_promedio = new javax.swing.JList<>();
+        jPanel_contenedor_tabla = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable_lista_prov_peliculas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,7 +80,7 @@ public class MainUIFrame extends javax.swing.JFrame {
 
         jPanel_anadirProveedor.setPreferredSize(new java.awt.Dimension(792, 329));
 
-        jLabel_nombre_proveedor.setText("Nombre del proveedor");
+        jLabel_descripcion_proveedor.setText("Descripción del proveedor");
 
         jButton_anadir_proveedor.setText("Añadir Proveedor");
         jButton_anadir_proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -100,24 +101,24 @@ public class MainUIFrame extends javax.swing.JFrame {
             .addGroup(jPanel_anadirProveedorLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_anadirProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel_nombre_proveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_descripcion_proveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel_anadirProveedorLayout.createSequentialGroup()
                         .addGroup(jPanel_anadirProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField_nombre_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_anadir_proveedor))
-                        .addGap(0, 71, Short.MAX_VALUE)))
+                            .addComponent(jButton_anadir_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 141, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_anadirProveedorLayout.setVerticalGroup(
             jPanel_anadirProveedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_anadirProveedorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_nombre_proveedor)
+                .addComponent(jLabel_descripcion_proveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_nombre_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_anadir_proveedor)
-                .addContainerGap(598, Short.MAX_VALUE))
+                .addComponent(jButton_anadir_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(613, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Añadir Proveedor", jPanel_anadirProveedor);
@@ -151,7 +152,7 @@ public class MainUIFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_anadir_peliculasLayout.createSequentialGroup()
-                        .addGap(0, 299, Short.MAX_VALUE)
+                        .addGap(0, 369, Short.MAX_VALUE)
                         .addComponent(jButton_anadir_pelicula))
                     .addGroup(jPanel_anadir_peliculasLayout.createSequentialGroup()
                         .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -187,57 +188,23 @@ public class MainUIFrame extends javax.swing.JFrame {
                 .addComponent(jLabel_formato)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox_formato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 404, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 440, Short.MAX_VALUE)
                 .addComponent(jButton_anadir_pelicula)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Añadir Pelicula", jPanel_anadir_peliculas);
 
-        jLabel_busqueda_nombre.setText("Ingrese el nombre del gimnasio");
+        jLabel_remover_proveedor.setText("¿Desea remover el último proveedor añadido?");
 
-        jList_busqueda_nombre.setModel(new DefaultListModel<String>());
-        jScrollPane_busqueda_gimnasios.setViewportView(jList_busqueda_nombre);
-        jList_busqueda_nombre.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent evento) {
-                if (!evento.getValueIsAdjusting()) {
-                    String valorSeleccionado = jList_busqueda_nombre.getSelectedValue();
-                    llenarCampos(valorSeleccionado);
-                }
-            }
-
-            public void llenarCampos(String stringInicial) {
-                if(stringInicial != null) {
-                    int id;
-                    String[] partes = stringInicial.split("   ");
-                    for(int i = 0; i < partes.length; i++) {
-                        partes[i] = partes[i].trim();
-                    }
-
-                    String[] parteId = partes[0].split(":");
-                    id = Integer.parseInt(parteId[1].trim());
-
-                    Gimnasio gimnasio = gymDao.EncuentraPorId(id);
-
-                    jTextField_editar_id.setText(Integer.toString(gimnasio.getId()));
-                    jTextField_editar_nombre.setText(gimnasio.getNombre());
-                    jTextField_editar_maquinas.setText(Integer.toString(gimnasio.getNumeroMaquinas()));
-                    jTextField_editar_promedio.setText(Integer.toString(gimnasio.getClientesPorMes()));
-                    if (gimnasio.getIncluyeCrossfit() == true) {
-                        jCheckBox_editar_crossfit.setSelected(true);
-                    } else {
-                        jCheckBox_editar_crossfit.setSelected(false);
-                    }
-                }
-            }
-        });
-
-        jButton_buscar_nombre.setText("Buscar");
-        jButton_buscar_nombre.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButton_remover_proveedor.setText("Remover proveedor");
+        jButton_remover_proveedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton_buscar_nombreMouseClicked(evt);
+                jButton_remover_proveedorMouseClicked(evt);
             }
         });
+
+        jLabel_remover_info.setText("El proveedor no debe tener películas asociadas para poder ser removido.");
 
         javax.swing.GroupLayout jPanel_buscarGimnasiosLayout = new javax.swing.GroupLayout(jPanel_buscarGimnasios);
         jPanel_buscarGimnasios.setLayout(jPanel_buscarGimnasiosLayout);
@@ -248,25 +215,21 @@ public class MainUIFrame extends javax.swing.JFrame {
                 .addGroup(jPanel_buscarGimnasiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_buscarGimnasiosLayout.createSequentialGroup()
                         .addGroup(jPanel_buscarGimnasiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel_busqueda_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField_busqueda_nombre))
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton_buscar_nombre)
+                            .addComponent(jLabel_remover_proveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton_remover_proveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane_busqueda_gimnasios, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
+                    .addComponent(jLabel_remover_info, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel_buscarGimnasiosLayout.setVerticalGroup(
             jPanel_buscarGimnasiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_buscarGimnasiosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_busqueda_nombre)
+                .addComponent(jLabel_remover_proveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_buscarGimnasiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField_busqueda_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_buscar_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 20, Short.MAX_VALUE))
+                .addComponent(jButton_remover_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane_busqueda_gimnasios, javax.swing.GroupLayout.PREFERRED_SIZE, 580, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_remover_info)
                 .addContainerGap())
         );
 
@@ -298,7 +261,7 @@ public class MainUIFrame extends javax.swing.JFrame {
                             .addGroup(jPanel_busquedaPorClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jButton_filtrarPorPromedio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                                 .addComponent(jTextField_promedioClientes, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addGap(0, 143, Short.MAX_VALUE)))
+                        .addGap(0, 213, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_busquedaPorClientesLayout.setVerticalGroup(
@@ -311,11 +274,40 @@ public class MainUIFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_filtrarPorPromedio)
                 .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Remover Película", jPanel_busquedaPorClientes);
+
+        jTable_lista_prov_peliculas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable_lista_prov_peliculas);
+
+        javax.swing.GroupLayout jPanel_contenedor_tablaLayout = new javax.swing.GroupLayout(jPanel_contenedor_tabla);
+        jPanel_contenedor_tabla.setLayout(jPanel_contenedor_tablaLayout);
+        jPanel_contenedor_tablaLayout.setHorizontalGroup(
+            jPanel_contenedor_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_contenedor_tablaLayout.createSequentialGroup()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+        jPanel_contenedor_tablaLayout.setVerticalGroup(
+            jPanel_contenedor_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_contenedor_tablaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -329,8 +321,9 @@ public class MainUIFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton_salir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 435, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44)
+                        .addComponent(jPanel_contenedor_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -338,8 +331,13 @@ public class MainUIFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel_tituloPrincipal)
-                .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jTabbedPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(jPanel_contenedor_tabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jButton_salir)
                 .addContainerGap())
@@ -352,7 +350,7 @@ public class MainUIFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_salirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_salirMouseClicked
-        
+
     }//GEN-LAST:event_jButton_salirMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
@@ -360,28 +358,24 @@ public class MainUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jButton_filtrarPorPromedioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_filtrarPorPromedioMouseClicked
-        ArrayList<Gimnasio> listaGimnasios = gymDao.FiltrarPorPromedio(gymDao.obtenerGimnasios(), Integer.parseInt(jTextField_promedioClientes.getText()));
-        DefaultListModel<String> listModel = new DefaultListModel();
+        //ArrayList<Gimnasio> listaGimnasios = gymDao.FiltrarPorPromedio(gymDao.obtenerGimnasios(), Integer.parseInt(jTextField_promedioClientes.getText()));
+        //DefaultListModel<String> listModel = new DefaultListModel();
 
-        for (Gimnasio gimnasio : listaGimnasios) {
-            listModel.addElement("ID: " + gimnasio.getId() + "   |  Nombre: " + gimnasio.getNombre() + "   |  Número de máquinas: " + gimnasio.getNumeroMaquinas() + "   |  Incluye crossfit: " + gimnasio.getIncluyeCrossfit() + "   |  Promedio clientes por mes: " + gimnasio.getClientesPorMes());
-        }
-        jList_busqueda_promedio.setModel(listModel);
+        //for (Gimnasio gimnasio : listaGimnasios) {
+        //    listModel.addElement("ID: " + gimnasio.getId() + "   |  Nombre: " + gimnasio.getNombre() + "   |  Número de máquinas: " + gimnasio.getNumeroMaquinas() + "   |  Incluye crossfit: " + gimnasio.getIncluyeCrossfit() + "   |  Promedio clientes por mes: " + gimnasio.getClientesPorMes());
+        //}
+        //jList_busqueda_promedio.setModel(listModel);
     }//GEN-LAST:event_jButton_filtrarPorPromedioMouseClicked
 
-    private void jButton_buscar_nombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_buscar_nombreMouseClicked
-        ArrayList<Gimnasio> listaGimnasios = gymDao.EncuentraPorNombre(jTextField_busqueda_nombre.getText().toLowerCase());
-        DefaultListModel<String> listaModelo = new DefaultListModel();
+    private void jButton_remover_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_remover_proveedorMouseClicked
+        pilaProv.removerProveedor();
+        System.out.println(Arrays.toString(pilaProv.getProveedores()));
 
-        for (Gimnasio gimnasio : listaGimnasios) {
-            listaModelo.addElement("ID: " + gimnasio.getId() + "   |  Nombre: " + gimnasio.getNombre() + "   |  Número de máquinas: " + gimnasio.getNumeroMaquinas() + "   |  Incluye crossfit: " + gimnasio.getIncluyeCrossfit() + "   |  Promedio clientes por mes: " + gimnasio.getClientesPorMes());
-        }
-
-        jList_busqueda_nombre.setModel(listaModelo);
-    }//GEN-LAST:event_jButton_buscar_nombreMouseClicked
+        //jList_busqueda_nombre.setModel(listaModelo);
+    }//GEN-LAST:event_jButton_remover_proveedorMouseClicked
 
     private void jButton_anadir_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_peliculaMouseClicked
-        jTable_tablaListaGimnasios.setModel(new ListaGimnasios(gymDao.obtenerGimnasios().iterator()));
+        //jTable_tablaListaGimnasios.setModel(new ListaGimnasios(gymDao.obtenerGimnasios().iterator()));
     }//GEN-LAST:event_jButton_anadir_peliculaMouseClicked
 
     private void jButton_anadir_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_anadir_proveedorActionPerformed
@@ -389,14 +383,15 @@ public class MainUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_anadir_proveedorActionPerformed
 
     private void jButton_anadir_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_proveedorMouseClicked
-        String nombre = jTextField_nombre_proveedor.getText();
-        int maquinas = Integer.parseInt(jTextField_cantidad_maqinas.getText());
-        boolean crossfit = jCheckBox_crossfit.isSelected();
-        int clientes = Integer.parseInt(jTextField_cant_clientes.getText());
-        int id = gymDao.gymIdsContador;
+        String descripcion = jLabel_descripcion_proveedor.getText();
 
-        gymDao.anadirGimnasio(id, nombre, maquinas, crossfit, clientes);
-        jTable_tablaListaGimnasios.setModel(new ListaGimnasios(gymDao.obtenerGimnasios().iterator()));
+        Proveedor nuevoProv = new Proveedor(descripcion);
+
+        pilaProv.anadirProveedor(nuevoProv);
+
+        System.out.println(Arrays.toString(pilaProv.getProveedores()));
+
+        //jTable_lista_prov_peliculas.setModel(pilaProv.getProveedores());
     }//GEN-LAST:event_jButton_anadir_proveedorMouseClicked
 
     /**
@@ -437,30 +432,31 @@ public class MainUIFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_anadir_pelicula;
     private javax.swing.JButton jButton_anadir_proveedor;
-    private javax.swing.JButton jButton_buscar_nombre;
     private javax.swing.JButton jButton_filtrarPorPromedio;
+    private javax.swing.JButton jButton_remover_proveedor;
     private javax.swing.JButton jButton_salir;
     private javax.swing.JComboBox<String> jComboBox_audiencia;
     private javax.swing.JComboBox<String> jComboBox_categoria;
     private javax.swing.JComboBox<String> jComboBox_formato;
     private javax.swing.JLabel jLabel_audiencia;
-    private javax.swing.JLabel jLabel_busqueda_nombre;
     private javax.swing.JLabel jLabel_categoria;
+    private javax.swing.JLabel jLabel_descripcion_proveedor;
     private javax.swing.JLabel jLabel_formato;
     private javax.swing.JLabel jLabel_nombre_pelicula;
-    private javax.swing.JLabel jLabel_nombre_proveedor;
     private javax.swing.JLabel jLabel_promedioMinimo;
+    private javax.swing.JLabel jLabel_remover_info;
+    private javax.swing.JLabel jLabel_remover_proveedor;
     private javax.swing.JLabel jLabel_tituloPrincipal;
-    private javax.swing.JList<String> jList_busqueda_nombre;
     private javax.swing.JList<String> jList_busqueda_promedio;
     private javax.swing.JPanel jPanel_anadirProveedor;
     private javax.swing.JPanel jPanel_anadir_peliculas;
     private javax.swing.JPanel jPanel_buscarGimnasios;
     private javax.swing.JPanel jPanel_busquedaPorClientes;
+    private javax.swing.JPanel jPanel_contenedor_tabla;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane_busqueda_gimnasios;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField_busqueda_nombre;
+    private javax.swing.JTable jTable_lista_prov_peliculas;
     private javax.swing.JTextField jTextField_nombre_pelicula;
     private javax.swing.JTextField jTextField_nombre_proveedor;
     private javax.swing.JTextField jTextField_promedioClientes;

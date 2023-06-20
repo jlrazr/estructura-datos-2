@@ -32,8 +32,9 @@
                       <Component id="jButton_salir" min="-2" pref="108" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jTabbedPane1" min="-2" pref="435" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="jTabbedPane1" min="-2" pref="505" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="jPanel_contenedor_tabla" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -45,8 +46,16 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel_tituloPrincipal" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jTabbedPane1" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jPanel_contenedor_tabla" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="jButton_salir" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -103,13 +112,13 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabel_nombre_proveedor" max="32767" attributes="0"/>
+                          <Component id="jLabel_descripcion_proveedor" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jTextField_nombre_proveedor" min="-2" pref="335" max="-2" attributes="0"/>
-                                  <Component id="jButton_anadir_proveedor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton_anadir_proveedor" min="-2" pref="184" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="71" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="141" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -120,20 +129,20 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel_nombre_proveedor" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_descripcion_proveedor" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jTextField_nombre_proveedor" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButton_anadir_proveedor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="598" max="32767" attributes="0"/>
+                      <Component id="jButton_anadir_proveedor" min="-2" pref="46" max="-2" attributes="0"/>
+                      <EmptySpace pref="613" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel_nombre_proveedor">
+            <Component class="javax.swing.JLabel" name="jLabel_descripcion_proveedor">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nombre del proveedor"/>
+                <Property name="text" type="java.lang.String" value="Descripci&#xf3;n del proveedor"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextField_nombre_proveedor">
@@ -165,7 +174,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="299" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
                               <Component id="jButton_anadir_pelicula" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -209,7 +218,7 @@
                       <Component id="jLabel_formato" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jComboBox_formato" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="404" max="32767" attributes="0"/>
+                      <EmptySpace pref="440" max="32767" attributes="0"/>
                       <Component id="jButton_anadir_pelicula" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -311,14 +320,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel_busqueda_nombre" max="32767" attributes="0"/>
-                                  <Component id="jTextField_busqueda_nombre" max="32767" attributes="0"/>
+                                  <Component id="jLabel_remover_proveedor" max="32767" attributes="0"/>
+                                  <Component id="jButton_remover_proveedor" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                              <Component id="jButton_buscar_nombre" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jScrollPane_busqueda_gimnasios" alignment="0" pref="406" max="32767" attributes="0"/>
+                          <Component id="jLabel_remover_info" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -328,51 +335,34 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel_busqueda_nombre" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel_remover_proveedor" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jTextField_busqueda_nombre" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton_buscar_nombre" alignment="3" pref="20" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="jButton_remover_proveedor" min="-2" pref="38" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane_busqueda_gimnasios" min="-2" pref="580" max="-2" attributes="0"/>
+                      <Component id="jLabel_remover_info" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="jLabel_busqueda_nombre">
+            <Component class="javax.swing.JLabel" name="jLabel_remover_proveedor">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ingrese el nombre del gimnasio"/>
+                <Property name="text" type="java.lang.String" value="&#xbf;Desea remover el &#xfa;ltimo proveedor a&#xf1;adido?"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField_busqueda_nombre">
-            </Component>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane_busqueda_gimnasios">
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JList" name="jList_busqueda_nombre">
-                  <Properties>
-                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new DefaultListModel&lt;String&gt;()" type="code"/>
-                    </Property>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jList_busqueda_nombre.addListSelectionListener(new ListSelectionListener() {&#xa;    public void valueChanged(ListSelectionEvent evento) {&#xa;        if (!evento.getValueIsAdjusting()) {&#xa;            String valorSeleccionado = jList_busqueda_nombre.getSelectedValue();&#xa;            llenarCampos(valorSeleccionado);&#xa;        }&#xa;    }&#xa;&#xa;    public void llenarCampos(String stringInicial) {&#xa;        if(stringInicial != null) {&#xa;            int id;&#xa;            String[] partes = stringInicial.split(&quot;   &quot;);&#xa;            for(int i = 0; i &lt; partes.length; i++) {&#xa;                partes[i] = partes[i].trim();&#xa;            }&#xa;&#xa;            String[] parteId = partes[0].split(&quot;:&quot;);&#xa;            id = Integer.parseInt(parteId[1].trim());&#xa;&#xa;            Gimnasio gimnasio = gymDao.EncuentraPorId(id);&#xa;&#xa;            jTextField_editar_id.setText(Integer.toString(gimnasio.getId()));&#xa;            jTextField_editar_nombre.setText(gimnasio.getNombre());&#xa;            jTextField_editar_maquinas.setText(Integer.toString(gimnasio.getNumeroMaquinas()));&#xa;            jTextField_editar_promedio.setText(Integer.toString(gimnasio.getClientesPorMes()));&#xa;            if (gimnasio.getIncluyeCrossfit() == true) {&#xa;                jCheckBox_editar_crossfit.setSelected(true);&#xa;            } else {&#xa;                jCheckBox_editar_crossfit.setSelected(false);&#xa;            }&#xa;        }&#xa;    }&#xa;});"/>
-                    <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-                  </AuxValues>
-                </Component>
-              </SubComponents>
-            </Container>
-            <Component class="javax.swing.JButton" name="jButton_buscar_nombre">
+            <Component class="javax.swing.JButton" name="jButton_remover_proveedor">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Buscar"/>
+                <Property name="text" type="java.lang.String" value="Remover proveedor"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton_buscar_nombreMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton_remover_proveedorMouseClicked"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel_remover_info">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="El proveedor no debe tener pel&#xed;culas asociadas para poder ser removido."/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
@@ -400,7 +390,7 @@
                                       <Component id="jTextField_promedioClientes" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="143" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="213" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -417,7 +407,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jButton_filtrarPorPromedio" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="558" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="594" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -455,6 +445,51 @@
                 </Component>
               </SubComponents>
             </Container>
+          </SubComponents>
+        </Container>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="jPanel_contenedor_tabla">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="1" attributes="0">
+                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="jTable_lista_prov_peliculas">
+              <Properties>
+                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                  <Table columnCount="4" rowCount="4">
+                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                  </Table>
+                </Property>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>
