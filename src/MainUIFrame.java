@@ -1,8 +1,8 @@
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /*
  * @author Jose Luis Mora
@@ -10,42 +10,19 @@ import javax.swing.DefaultListModel;
 public class MainUIFrame extends javax.swing.JFrame {
 
     // Inicializa la pila de proveedores
-    PilaProveedores pilaProv = new PilaProveedores(5);
+    public ProviderStack providerStack = new ProviderStack();
+    public int provSeleccionado = 0;
 
     // Inicializa la tabla y prepara el método para actualizarla
-    public ModeloTablaCustom modeloTabla = new ModeloTablaCustom();
+    public MovieTableModel modeloTabla = new MovieTableModel(providerStack);
 
     public MainUIFrame() {
         initComponents();
     }
 
-    public void actualizaTabla(PilaProveedores pilaProveedores) {
-        List<Proveedor> proveedores = Arrays.asList(pilaProveedores.getProveedores());
-        List<Object[]> datosFila = new ArrayList<>(); // Acá se usa ArrayList pero SÓLO para mostrar en la tabla, no para la manipulación de pilas o colas.
-        
-        for (Proveedor proveedor : proveedores) {
-            if(proveedor != null) {
-                for (Pelicula pelicula : proveedor.getPeliculas()) {
-                    if(pelicula != null) {
-                        datosFila.add(new Object[] {proveedor.getDescripcion(), pelicula.getNombre()});
-                    }
-                }
-            }
-        }
-        
-        //modeloTabla.setData(datosFila.toArray(pilaProv.getProveedores()));
-        modeloTabla.fireTableDataChanged();
-        
-    }
-    
-    
-    
-    
-    
     /**
      * Creates new form MainUIFrame
      */
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,6 +50,8 @@ public class MainUIFrame extends javax.swing.JFrame {
         jComboBox_audiencia = new javax.swing.JComboBox<>();
         jLabel_formato = new javax.swing.JLabel();
         jComboBox_formato = new javax.swing.JComboBox<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea_instrucciones = new javax.swing.JTextArea();
         jPanel_buscarGimnasios = new javax.swing.JPanel();
         jLabel_remover_proveedor = new javax.swing.JLabel();
         jButton_remover_proveedor = new javax.swing.JButton();
@@ -85,7 +64,7 @@ public class MainUIFrame extends javax.swing.JFrame {
         jList_busqueda_promedio = new javax.swing.JList<>();
         jPanel_contenedor_tabla = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable_tabla_prov_peliculas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -162,7 +141,7 @@ public class MainUIFrame extends javax.swing.JFrame {
 
         jLabel_categoria.setText("Categoría");
 
-        jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acción", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Musical", "Suspenso", "Terror"}));
+        jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acción", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasia", "Musical", "Suspenso", "Terror"}));
 
         jLabel_audiencia.setText("Audiencia");
 
@@ -172,6 +151,12 @@ public class MainUIFrame extends javax.swing.JFrame {
 
         jComboBox_formato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2D", "3D", "IMAX" }));
 
+        jTextArea_instrucciones.setEditable(false);
+        jTextArea_instrucciones.setColumns(20);
+        jTextArea_instrucciones.setRows(5);
+        jTextArea_instrucciones.setText("Antes de hacer click en el botón de \"Añadir Película\", \ndebe seleccionar un proveedor de la tabla de la derecha al\nque desea añadir la película.");
+        jScrollPane3.setViewportView(jTextArea_instrucciones);
+
         javax.swing.GroupLayout jPanel_anadir_peliculasLayout = new javax.swing.GroupLayout(jPanel_anadir_peliculas);
         jPanel_anadir_peliculas.setLayout(jPanel_anadir_peliculasLayout);
         jPanel_anadir_peliculasLayout.setHorizontalGroup(
@@ -179,23 +164,20 @@ public class MainUIFrame extends javax.swing.JFrame {
             .addGroup(jPanel_anadir_peliculasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_anadir_peliculasLayout.createSequentialGroup()
-                        .addGap(0, 369, Short.MAX_VALUE)
-                        .addComponent(jButton_anadir_pelicula))
-                    .addGroup(jPanel_anadir_peliculasLayout.createSequentialGroup()
-                        .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox_audiencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel_nombre_pelicula)
-                                    .addComponent(jTextField_nombre_pelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
-                                    .addComponent(jLabel_categoria)
-                                    .addComponent(jComboBox_categoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addComponent(jLabel_audiencia))
-                            .addComponent(jLabel_formato)
-                            .addComponent(jComboBox_formato, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                        .addComponent(jComboBox_audiencia, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel_nombre_pelicula)
+                                .addComponent(jTextField_nombre_pelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                                .addComponent(jLabel_categoria)
+                                .addComponent(jComboBox_categoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel_audiencia))
+                        .addComponent(jLabel_formato, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jComboBox_formato, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton_anadir_pelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
         jPanel_anadir_peliculasLayout.setVerticalGroup(
             jPanel_anadir_peliculasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,9 +198,11 @@ public class MainUIFrame extends javax.swing.JFrame {
                 .addComponent(jLabel_formato)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox_formato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 440, Short.MAX_VALUE)
-                .addComponent(jButton_anadir_pelicula)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton_anadir_pelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(282, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Añadir Pelicula", jPanel_anadir_peliculas);
@@ -308,8 +292,21 @@ public class MainUIFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Remover Película", jPanel_busquedaPorClientes);
 
-        jTable1.setModel(modeloTabla);
-        jScrollPane2.setViewportView(jTable1);
+        jTable_tabla_prov_peliculas.setModel(modeloTabla);
+        jTable_tabla_prov_peliculas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) { // finished selecting a row
+                    int selectedRow = jTable_tabla_prov_peliculas.getSelectedRow();
+                    if (selectedRow >= 0) {
+                        Provider provider = providerStack.getProviderAt(selectedRow);
+                        provSeleccionado = selectedRow;
+                        System.out.println("Selected Provider ID: " + provider.getID());
+                    }
+                }
+            }
+        });
+        jScrollPane2.setViewportView(jTable_tabla_prov_peliculas);
 
         javax.swing.GroupLayout jPanel_contenedor_tablaLayout = new javax.swing.GroupLayout(jPanel_contenedor_tabla);
         jPanel_contenedor_tabla.setLayout(jPanel_contenedor_tablaLayout);
@@ -387,13 +384,30 @@ public class MainUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_filtrarPorPromedioMouseClicked
 
     private void jButton_remover_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_remover_proveedorMouseClicked
-        pilaProv.removerProveedor();
-        System.out.println(Arrays.toString(pilaProv.getProveedores()));
-
+        providerStack.popProvider();
     }//GEN-LAST:event_jButton_remover_proveedorMouseClicked
 
     private void jButton_anadir_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_peliculaMouseClicked
-        //jTable_tablaListaGimnasios.setModel(new ListaGimnasios(gymDao.obtenerGimnasios().iterator()));
+        String nombre = jTextField_nombre_pelicula.getText();
+        String categoria = jComboBox_categoria.getSelectedItem().toString();
+        String audiencia = jComboBox_audiencia.getSelectedItem().toString();
+        String formato = jComboBox_formato.getSelectedItem().toString();
+        
+        Movie nuevaPelicula = new Movie(nombre, categoria, audiencia, formato);
+        Provider provider = providerStack.getProviderAt(provSeleccionado);
+        
+        provider.addMovie(nuevaPelicula);
+        
+        System.out.print(provider.getDescription());
+        System.out.print(nuevaPelicula.getName());
+        
+        for (int i = 0; i < provider.getAllMovies().length; i++) {
+            System.out.println(provider.getAllMovies().toString());
+        }
+        
+        
+        
+
     }//GEN-LAST:event_jButton_anadir_peliculaMouseClicked
 
     private void jButton_anadir_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_anadir_proveedorActionPerformed
@@ -401,17 +415,12 @@ public class MainUIFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_anadir_proveedorActionPerformed
 
     private void jButton_anadir_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_proveedorMouseClicked
-        String descripcion = jLabel_descripcion_proveedor.getText();
+        String descripcion = jTextField_nombre_proveedor.getText();
+        Provider newProvider = new Provider(descripcion);
 
-        Proveedor nuevoProv = new Proveedor(descripcion);
-
-        pilaProv.anadirProveedor(nuevoProv);
-
-        System.out.println(Arrays.toString(pilaProv.getProveedores()));
+        providerStack.pushProvider(newProvider);
         
-        modeloTabla.setData(pilaProv.getProveedores());
-
-        modeloTabla.fireTableDataChanged();
+        modeloTabla.refreshTableData();
     }//GEN-LAST:event_jButton_anadir_proveedorMouseClicked
 
     /**
@@ -475,8 +484,10 @@ public class MainUIFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_contenedor_tabla;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable_tabla_prov_peliculas;
+    private javax.swing.JTextArea jTextArea_instrucciones;
     private javax.swing.JTextField jTextField_nombre_pelicula;
     private javax.swing.JTextField jTextField_nombre_proveedor;
     private javax.swing.JTextField jTextField_promedioClientes;
