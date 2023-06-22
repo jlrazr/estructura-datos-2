@@ -1,8 +1,8 @@
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /*
  * @author Jose Luis Mora
@@ -12,12 +12,40 @@ public class MainUIFrame extends javax.swing.JFrame {
     // Inicializa la pila de proveedores
     PilaProveedores pilaProv = new PilaProveedores(5);
 
-    /**
-     * Creates new form MainUIFrame
-     */
+    // Inicializa la tabla y prepara el método para actualizarla
+    public ModeloTablaCustom modeloTabla = new ModeloTablaCustom();
+
     public MainUIFrame() {
         initComponents();
     }
+
+    public void actualizaTabla(PilaProveedores pilaProveedores) {
+        List<Proveedor> proveedores = Arrays.asList(pilaProveedores.getProveedores());
+        List<Object[]> datosFila = new ArrayList<>(); // Acá se usa ArrayList pero SÓLO para mostrar en la tabla, no para la manipulación de pilas o colas.
+        
+        for (Proveedor proveedor : proveedores) {
+            if(proveedor != null) {
+                for (Pelicula pelicula : proveedor.getPeliculas()) {
+                    if(pelicula != null) {
+                        datosFila.add(new Object[] {proveedor.getDescripcion(), pelicula.getNombre()});
+                    }
+                }
+            }
+        }
+        
+        //modeloTabla.setData(datosFila.toArray(pilaProv.getProveedores()));
+        modeloTabla.fireTableDataChanged();
+        
+    }
+    
+    
+    
+    
+    
+    /**
+     * Creates new form MainUIFrame
+     */
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,7 +85,7 @@ public class MainUIFrame extends javax.swing.JFrame {
         jList_busqueda_promedio = new javax.swing.JList<>();
         jPanel_contenedor_tabla = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable_lista_prov_peliculas = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,15 +162,15 @@ public class MainUIFrame extends javax.swing.JFrame {
 
         jLabel_categoria.setText("Categoría");
 
-        jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acción", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Musical", "Suspenso", "Terror"}));
 
         jLabel_audiencia.setText("Audiencia");
 
-        jComboBox_audiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_audiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Infantil", "Juvenil", "Adultos", "Familiares" }));
 
         jLabel_formato.setText("Formato");
 
-        jComboBox_formato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_formato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2D", "3D", "IMAX" }));
 
         javax.swing.GroupLayout jPanel_anadir_peliculasLayout = new javax.swing.GroupLayout(jPanel_anadir_peliculas);
         jPanel_anadir_peliculas.setLayout(jPanel_anadir_peliculasLayout);
@@ -280,24 +308,15 @@ public class MainUIFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Remover Película", jPanel_busquedaPorClientes);
 
-        jTable_lista_prov_peliculas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable_lista_prov_peliculas);
+        jTable1.setModel(modeloTabla);
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel_contenedor_tablaLayout = new javax.swing.GroupLayout(jPanel_contenedor_tabla);
         jPanel_contenedor_tabla.setLayout(jPanel_contenedor_tablaLayout);
         jPanel_contenedor_tablaLayout.setHorizontalGroup(
             jPanel_contenedor_tablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_contenedor_tablaLayout.createSequentialGroup()
+            .addGroup(jPanel_contenedor_tablaLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
@@ -371,7 +390,6 @@ public class MainUIFrame extends javax.swing.JFrame {
         pilaProv.removerProveedor();
         System.out.println(Arrays.toString(pilaProv.getProveedores()));
 
-        //jList_busqueda_nombre.setModel(listaModelo);
     }//GEN-LAST:event_jButton_remover_proveedorMouseClicked
 
     private void jButton_anadir_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_peliculaMouseClicked
@@ -390,8 +408,10 @@ public class MainUIFrame extends javax.swing.JFrame {
         pilaProv.anadirProveedor(nuevoProv);
 
         System.out.println(Arrays.toString(pilaProv.getProveedores()));
+        
+        modeloTabla.setData(pilaProv.getProveedores());
 
-        //jTable_lista_prov_peliculas.setModel(pilaProv.getProveedores());
+        modeloTabla.fireTableDataChanged();
     }//GEN-LAST:event_jButton_anadir_proveedorMouseClicked
 
     /**
@@ -456,7 +476,7 @@ public class MainUIFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable_lista_prov_peliculas;
+    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField_nombre_pelicula;
     private javax.swing.JTextField jTextField_nombre_proveedor;
     private javax.swing.JTextField jTextField_promedioClientes;
