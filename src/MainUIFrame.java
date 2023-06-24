@@ -296,12 +296,12 @@ public class MainUIFrame extends javax.swing.JFrame {
         jTable_tabla_prov_peliculas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent event) {
-                if (!event.getValueIsAdjusting()) { // finished selecting a row
+                if (!event.getValueIsAdjusting()) { // Termina el proceso de seleccionar la fila
                     int selectedRow = jTable_tabla_prov_peliculas.getSelectedRow();
                     if (selectedRow >= 0) {
                         Provider provider = providerStack.getProviderAt(selectedRow);
                         provSeleccionado = selectedRow;
-                        System.out.println("Selected Provider ID: " + provider.getID());
+                        System.out.println("EL ID del proveedor seleccionado es: " + provider.getID());
                     }
                 }
             }
@@ -392,22 +392,27 @@ public class MainUIFrame extends javax.swing.JFrame {
         String categoria = jComboBox_categoria.getSelectedItem().toString();
         String audiencia = jComboBox_audiencia.getSelectedItem().toString();
         String formato = jComboBox_formato.getSelectedItem().toString();
-        
+
         Movie nuevaPelicula = new Movie(nombre, categoria, audiencia, formato);
         Provider provider = providerStack.getProviderAt(provSeleccionado);
         
         provider.addMovie(nuevaPelicula);
+
+        Movie[] peliculas = provider.getAllMovies();
+        int cuentaPelis = 0;
         
-        System.out.print(provider.getDescription());
-        System.out.print(nuevaPelicula.getName());
-        
-        for (int i = 0; i < provider.getAllMovies().length; i++) {
-            System.out.println(provider.getAllMovies().toString());
+        for (int i = 0; i < peliculas.length; i++) {
+            if(peliculas[i] != null) {
+                cuentaPelis++;
+                System.out.println(provider.getDescription());
+                System.out.println(nuevaPelicula.getName());
+                System.out.println(nuevaPelicula.getAudience());
+                System.out.println(nuevaPelicula.getCategory());
+                System.out.println(nuevaPelicula.getFormat());
+            }
         }
         
-        
-        
-
+        System.out.println("El proveedor seleccionado tiene: " + cuentaPelis + " películas");
     }//GEN-LAST:event_jButton_anadir_peliculaMouseClicked
 
     private void jButton_anadir_proveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_anadir_proveedorActionPerformed

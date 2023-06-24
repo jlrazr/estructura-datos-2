@@ -45,4 +45,8 @@ public class Movie {
     public void setFormat(String format) {
         this.format = format;
     }
+    
+    public int getID() {
+        return ID;
+    }
 }

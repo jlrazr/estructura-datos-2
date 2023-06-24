@@ -485,7 +485,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTable_tabla_prov_peliculas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {&#xa;    @Override&#xa;    public void valueChanged(ListSelectionEvent event) {&#xa;        if (!event.getValueIsAdjusting()) { // finished selecting a row&#xa;            int selectedRow = jTable_tabla_prov_peliculas.getSelectedRow();&#xa;            if (selectedRow &gt;= 0) {&#xa;                Provider provider = providerStack.getProviderAt(selectedRow);&#xa;                provSeleccionado = selectedRow;&#xa;                System.out.println(&quot;Selected Provider ID: &quot; + provider.getID());&#xa;            }&#xa;        }&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTable_tabla_prov_peliculas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {&#xa;    @Override&#xa;    public void valueChanged(ListSelectionEvent event) {&#xa;        if (!event.getValueIsAdjusting()) { // Termina el proceso de seleccionar la fila&#xa;            int selectedRow = jTable_tabla_prov_peliculas.getSelectedRow();&#xa;            if (selectedRow &gt;= 0) {&#xa;                Provider provider = providerStack.getProviderAt(selectedRow);&#xa;                provSeleccionado = selectedRow;&#xa;                System.out.println(&quot;EL ID del proveedor seleccionado es: &quot; + provider.getID());&#xa;            }&#xa;        }&#xa;    }&#xa;});"/>
               </AuxValues>
             </Component>
           </SubComponents>

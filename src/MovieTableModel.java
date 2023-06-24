@@ -32,9 +32,9 @@ public class MovieTableModel extends AbstractTableModel {
         Provider provider = providerStack.getProviderAt(rowIndex);
 
         switch (columnIndex) {
-            case 0: // Provider column
+            case 0: // Columna de proveedores
                 return provider.getDescription();
-            case 1: // Movie column
+            case 1: // Columna de películas
                 return provider.getAllMovies().toString();
             default:
                 return null;
