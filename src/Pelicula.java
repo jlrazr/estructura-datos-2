@@ -1,17 +1,21 @@
-public class Movie {
-    private static int count = 0;
-    private int ID;
+public class Pelicula {
+    private static int counter = 0;
+    private final int id;
     private String name;
     private String category;
     private String audience;
     private String format;
 
-    public Movie(String name, String category, String audience, String format) {
-        this.ID = count++;
+    public Pelicula(String name, String category, String audience, String format) {
+        this.id = ++counter;
         this.name = name;
         this.category = category;
         this.audience = audience;
         this.format = format;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -45,8 +49,15 @@ public class Movie {
     public void setFormat(String format) {
         this.format = format;
     }
-    
-    public int getID() {
-        return ID;
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", audience='" + audience + '\'' +
+                ", format='" + format + '\'' +
+                '}';
     }
 }
