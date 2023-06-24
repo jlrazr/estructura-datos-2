@@ -3,92 +3,92 @@ public class Aplicacion {
     private int top;
 
     public Aplicacion() {
-        this.proveedores = new Proveedor[1];  // initially size 1
+        this.proveedores = new Proveedor[1];  // tamaño inicial de 1
         this.top = -1;
     }
 
-    public void addProvider(Proveedor provider) {
-        // Check if the stack is full. If full, increase the size.
+    public void anadirProveedor(Proveedor proveedor) {
+        // Si la cola está llena, incrementa su tamaño máximo
         if(top == proveedores.length - 1) {
-            Proveedor[] newArray = new Proveedor[proveedores.length * 2];
-            System.arraycopy(proveedores, 0, newArray, 0, proveedores.length);
-            proveedores = newArray;
+            Proveedor[] nuevoArray = new Proveedor[proveedores.length * 2];
+            System.arraycopy(proveedores, 0, nuevoArray, 0, proveedores.length);
+            proveedores = nuevoArray;
         }
-        proveedores[++top] = provider; // Add the new provider
+        proveedores[++top] = proveedor; // Añade el nuevo proveedor
     }
 
-    public void removeProvider() {
-        // Check if the stack is empty
+    public void removerProveedor() {
+        // Revisa si la pila está vacía
         if(top < 0) {
-            System.out.println("No providers available to remove");
+            System.out.println("No hay proveedores para remover");
             return;
         }
 
-        // Check if the provider has any movies
-        if(proveedores[top].getHead() != -1) {
-            System.out.println("All movies must be removed from this provider before removing the provider");
+        // Revisa si el proveedor tiene películas en su lista
+        if(proveedores[top].getCabeza() != -1) {
+            System.out.println("Debe remover todas las películas del proveedor antes de eliminarlo");
             return;
         }
 
-        proveedores[top--] = null; // Remove the top provider
+        proveedores[top--] = null; // Remueve el proveedor en el top de la pila
     }
 
-    public void addMovieToProvider(int providerId, Pelicula movie) {
+    public void anadirPelicula(int IdProveedor, Pelicula pelicula) {
         for(int i = 0; i <= top; i++) {
-            if(proveedores[i].getId() == providerId) {
-                // Check if the queue is full. If full, increase the size.
-                if(proveedores[i].getTail() == proveedores[i].getMovieList().length - 1) {
-                    Pelicula[] newArray = new Pelicula[proveedores[i].getMovieList().length * 2];
-                    System.arraycopy(proveedores[i].getMovieList(), 0, newArray, 0, proveedores[i].getMovieList().length);
-                    proveedores[i].setMovieList(newArray);
+            if(proveedores[i].getId() == IdProveedor) {
+                // Revisa si la cola está llena e incrementa su tamaño de ser el caso
+                if(proveedores[i].getCola() == proveedores[i].getListaPeliculas().length - 1) {
+                    Pelicula[] nuevoArray = new Pelicula[proveedores[i].getListaPeliculas().length * 2];
+                    System.arraycopy(proveedores[i].getListaPeliculas(), 0, nuevoArray, 0, proveedores[i].getListaPeliculas().length);
+                    proveedores[i].setListaPeliculas(nuevoArray);
                 }
 
-                // Increment the tail
-                proveedores[i].setTail(proveedores[i].getTail() + 1);
+                // Incrementa la cola
+                proveedores[i].setCola(proveedores[i].getCola() + 1);
 
-                // Add the new movie
-                proveedores[i].getMovieList()[proveedores[i].getTail()] = movie;
+                // Añade la película
+                proveedores[i].getListaPeliculas()[proveedores[i].getCola()] = pelicula;
 
-                // If it was the first element added, update the head.
-                if(proveedores[i].getHead() == -1) {
-                    proveedores[i].setHead(0);
+                // Actualiza la cabeza si fue el primer elemento que se añadió
+                if(proveedores[i].getCabeza() == -1) {
+                    proveedores[i].setCabeza(0);
                 }
                 return;
             }
         }
 
-        System.out.println("Provider not found");
+        System.out.println("Proveedor no encontrado");
     }
 
-    public void removeMovieFromProvider(int providerId) {
+    public void removerPelicula(int idProveedor) {
         for(int i = 0; i <= top; i++) {
-            if(proveedores[i].getId() == providerId) {
-                // Check if the queue is empty
-                if(proveedores[i].getHead() == -1) {
-                    System.out.println("No movies available to remove");
+            if(proveedores[i].getId() == idProveedor) {
+                // Revisa si la cola está vacía
+                if(proveedores[i].getCabeza() == -1) {
+                    System.out.println("No hay películas para remover");
                     return;
                 }
 
-                proveedores[i].getMovieList()[proveedores[i].getHead()] = null; // Remove the head movie
+                proveedores[i].getListaPeliculas()[proveedores[i].getCabeza()] = null; // Remueve la película en la posición "cabeza" o top
 
-                // Update the head
-                if(proveedores[i].getHead() == proveedores[i].getTail()) {
-                    // If it was the last element, reset the head and tail
-                    proveedores[i].setHead(-1);
-                    proveedores[i].setTail(-1);
+                // Actualiza la posición "cabeza"
+                if(proveedores[i].getCabeza() == proveedores[i].getCola()) {
+                    // Si fue el último elemento, reinicia la cabeza y la cola
+                    proveedores[i].setCabeza(-1);
+                    proveedores[i].setCola(-1);
                 } else {
-                    proveedores[i].setHead(proveedores[i].getHead() + 1);
+                    proveedores[i].setCabeza(proveedores[i].getCabeza() + 1);
                 }
                 return;
             }
         }
 
-        System.out.println("Provider not found");
+        System.out.println("Proveedor no encontrado");
     }
     
-    public void printAllProviders() {
+    public void imprimirProveedores() {
         if(top < 0) {
-            System.out.println("No providers registered yet.");
+            System.out.println("No hay proveedores registrados");
             return;
         }
         for(int i = 0; i <= top; i++) {
@@ -96,19 +96,19 @@ public class Aplicacion {
         }
     }
 
-    public void printMoviesByProvider(int providerId) {
+    public void imprimirPeliculasDelProveedor(int idProveedor) {
         for(int i = 0; i <= top; i++) {
-            if(proveedores[i].getId() == providerId) {
-                if(proveedores[i].getHead() == -1) {
-                    System.out.println("No movies registered for this provider.");
+            if(proveedores[i].getId() == idProveedor) {
+                if(proveedores[i].getCabeza() == -1) {
+                    System.out.println("El proveedor no tiene películas registradas");
                     return;
                 }
-                for(int j = proveedores[i].getHead(); j <= proveedores[i].getTail(); j++) {
-                    System.out.println(proveedores[i].getMovieList()[j]);
+                for(int j = proveedores[i].getCabeza(); j <= proveedores[i].getCola(); j++) {
+                    System.out.println(proveedores[i].getListaPeliculas()[j]);
                 }
                 return;
             }
         }
-        System.out.println("Provider not found");
+        System.out.println("Proveedor no encontrado");
     }
 }

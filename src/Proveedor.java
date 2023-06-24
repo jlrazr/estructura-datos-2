@@ -26,27 +26,27 @@ public class Proveedor {
         this.description = description;
     }
 
-    public Pelicula[] getMovieList() {
+    public Pelicula[] getListaPeliculas() {
         return movieList;
     }
 
-    public void setMovieList(Pelicula[] movieList) {
+    public void setListaPeliculas(Pelicula[] movieList) {
         this.movieList = movieList;
     }
 
-    public int getHead() {
+    public int getCabeza() {
         return head;
     }
 
-    public void setHead(int head) {
+    public void setCabeza(int head) {
         this.head = head;
     }
 
-    public int getTail() {
+    public int getCola() {
         return tail;
     }
 
-    public void setTail(int tail) {
+    public void setCola(int tail) {
         this.tail = tail;
     }
 
