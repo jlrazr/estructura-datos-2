@@ -424,7 +424,6 @@ public class MainUIFrame extends javax.swing.JFrame {
         Provider newProvider = new Provider(descripcion);
 
         providerStack.pushProvider(newProvider);
-        
         modeloTabla.refreshTableData();
     }//GEN-LAST:event_jButton_anadir_proveedorMouseClicked
 

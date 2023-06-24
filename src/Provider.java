@@ -56,6 +56,17 @@ public class Provider {
         return movies;
     }
     
+    public String getAllMoviesNames() {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < movieIndex; i++) {
+        sb.append("<html>").append(movies[i].getName()).append("<br/></html>");
+        if (i < movieIndex - 1) {
+            sb.append("\n");
+        }
+    }
+    return sb.toString();
+}
+
     public Movie getMovie(int id) {
         Movie match;
         
@@ -71,5 +82,15 @@ public class Provider {
     
     public int getID() {
         return ID;
+    }
+    
+    public int getNumberOfMovies() {
+        int numberOfMovies = 0;
+        for (Movie movie : movies) {
+            if (movie != null) {
+                numberOfMovies++;
+            }
+        }
+        return numberOfMovies;
     }
 }
