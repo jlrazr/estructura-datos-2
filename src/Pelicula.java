@@ -1,63 +1,63 @@
 public class Pelicula {
-    private static int counter = 0;
+    private static int contador = 0;
     private final int id;
-    private String name;
-    private String category;
-    private String audience;
-    private String format;
+    private String nombre;
+    private String categoria;
+    private String audiencia;
+    private String formato;
 
-    public Pelicula(String name, String category, String audience, String format) {
-        this.id = ++counter;
-        this.name = name;
-        this.category = category;
-        this.audience = audience;
-        this.format = format;
+    public Pelicula(String nombre, String categoria, String audiencia, String formato) {
+        this.id = ++contador;
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.audiencia = audiencia;
+        this.formato = formato;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCategory() {
-        return category;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
-    public String getAudience() {
-        return audience;
+    public String getAudiencia() {
+        return audiencia;
     }
 
-    public void setAudience(String audience) {
-        this.audience = audience;
+    public void setAudiencia(String audiencia) {
+        this.audiencia = audiencia;
     }
 
-    public String getFormat() {
-        return format;
+    public String getFormato() {
+        return formato;
     }
 
-    public void setFormat(String format) {
-        this.format = format;
+    public void setFormato(String formato) {
+        this.formato = formato;
     }
 
     @Override
     public String toString() {
-        return "Movie{" +
+        return "Pelicula{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", audience='" + audience + '\'' +
-                ", format='" + format + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", audiencia='" + audiencia + '\'' +
+                ", formato='" + formato + '\'' +
                 '}';
     }
 }

@@ -1,60 +1,60 @@
 public class Proveedor {
-    private static int counter = 0;
+    private static int contador = 0;
     private final int id;
-    private String description;
-    private Pelicula[] movieList;
-    private int head;
-    private int tail;
+    private String descripcion;
+    private Pelicula[] listaPeliculas;
+    private int cabeza;
+    private int cola;
 
-    public Proveedor(String description) {
-        this.id = ++counter;
-        this.description = description;
-        this.movieList = new Pelicula[1];
-        this.head = -1;
-        this.tail = -1;
+    public Proveedor(String descripcion) {
+        this.id = ++contador;
+        this.descripcion = descripcion;
+        this.listaPeliculas = new Pelicula[1];
+        this.cabeza = -1;
+        this.cola = -1;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescripcion(String description) {
+        this.descripcion = description;
     }
 
     public Pelicula[] getListaPeliculas() {
-        return movieList;
+        return listaPeliculas;
     }
 
     public void setListaPeliculas(Pelicula[] movieList) {
-        this.movieList = movieList;
+        this.listaPeliculas = movieList;
     }
 
     public int getCabeza() {
-        return head;
+        return cabeza;
     }
 
-    public void setCabeza(int head) {
-        this.head = head;
+    public void setCabeza(int cabeza) {
+        this.cabeza = cabeza;
     }
 
     public int getCola() {
-        return tail;
+        return cola;
     }
 
-    public void setCola(int tail) {
-        this.tail = tail;
+    public void setCola(int cola) {
+        this.cola = cola;
     }
 
     @Override
     public String toString() {
-        return "Provider{" +
+        return "Proveedor{" +
                 "id=" + id +
-                ", description='" + description + '\'' +
+                ", descripcion='" + descripcion + '\'' +
                 '}';
     }
 }
