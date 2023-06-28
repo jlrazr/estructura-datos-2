@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -39,25 +40,24 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel_eliminar_proveedor = new javax.swing.JLabel();
         jLabel_error_elim_proveedor = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel_error_desc_proveedor = new javax.swing.JLabel();
         jPanel_listaGimnasios = new javax.swing.JPanel();
         jLabel_reg_pelicula = new javax.swing.JLabel();
         jLabel_reg_pelicula_id_prov = new javax.swing.JLabel();
         jTextField_reg_pelicula_id_prov = new javax.swing.JTextField();
         jLabel_reg_pelicula_id_prov1 = new javax.swing.JLabel();
-        jTextField_reg_pelicula_id_prov1 = new javax.swing.JTextField();
+        jTextField_reg_pelicula_nombre = new javax.swing.JTextField();
         jLabel_reg_pelicula_categ = new javax.swing.JLabel();
         jLabel_reg_pelicula_audiencia = new javax.swing.JLabel();
         jLabel_reg_pelicula_formato = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBox_categoria = new javax.swing.JComboBox<>();
+        jComboBox_audiencia = new javax.swing.JComboBox<>();
+        jComboBox_formato = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         jButton_anadir_pelicula = new javax.swing.JButton();
         jLabel_remover_pelicula_id_prov = new javax.swing.JLabel();
         jTextField_remover_pelicula_id_prov = new javax.swing.JTextField();
         jLabel_reg_pelicula_id_prov3 = new javax.swing.JLabel();
-        jLabel_error_remover_pelicula = new javax.swing.JLabel();
+        jButton_remover_pelicula = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
@@ -98,9 +98,6 @@ public class Interfaz extends javax.swing.JFrame {
         jLabel_error_elim_proveedor.setText("Error: Debe eliminar todas las películas relacionadas con el proveedor antes de eliminar el proveedor.");
         jLabel_error_elim_proveedor.setVisible(false);
 
-        jLabel_error_desc_proveedor.setText("Error: Debe ingresar una descripción válida.");
-        jLabel_error_desc_proveedor.setVisible(false);
-
         javax.swing.GroupLayout jPanel_anadirGimnasioLayout = new javax.swing.GroupLayout(jPanel_anadirGimnasio);
         jPanel_anadirGimnasio.setLayout(jPanel_anadirGimnasioLayout);
         jPanel_anadirGimnasioLayout.setHorizontalGroup(
@@ -118,8 +115,7 @@ public class Interfaz extends javax.swing.JFrame {
                                 .addComponent(jButton_reg_proveedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextField_descripcion_proveedor, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(jLabel_eliminar_proveedor)
-                            .addComponent(jLabel_error_elim_proveedor)
-                            .addComponent(jLabel_error_desc_proveedor))
+                            .addComponent(jLabel_error_elim_proveedor))
                         .addGap(0, 159, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -134,15 +130,13 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jTextField_descripcion_proveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton_reg_proveedor)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel_error_desc_proveedor)
-                .addGap(13, 13, 13)
+                .addGap(46, 46, 46)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel_eliminar_proveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_eliminar_proveedor)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel_error_elim_proveedor)
                 .addContainerGap(410, Short.MAX_VALUE))
         );
@@ -161,19 +155,29 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel_reg_pelicula_formato.setText("Formato");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_categoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acción", "Aventura", "Ciencia Ficción", "Comedia", "Documental", "Drama", "Fantasía", "Musical", "Suspenso", "Terror" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_audiencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Infantil", "Juvenil", "Adultos", "Familiares" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox_formato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2D", "3D", "IMAX" }));
 
         jButton_anadir_pelicula.setText("Añadir Película");
+        jButton_anadir_pelicula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_anadir_peliculaMouseClicked(evt);
+            }
+        });
 
         jLabel_remover_pelicula_id_prov.setText("ID del Proveedor");
 
-        jLabel_reg_pelicula_id_prov3.setText("Remover Película");
+        jLabel_reg_pelicula_id_prov3.setText("Remover primera película del proveedor");
 
-        jLabel_error_remover_pelicula.setText("Error: No hay más películas asociadas al proveedor elegido para remover");
+        jButton_remover_pelicula.setText("Remover Película");
+        jButton_remover_pelicula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_remover_peliculaMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_listaGimnasiosLayout = new javax.swing.GroupLayout(jPanel_listaGimnasios);
         jPanel_listaGimnasios.setLayout(jPanel_listaGimnasiosLayout);
@@ -186,7 +190,7 @@ public class Interfaz extends javax.swing.JFrame {
                     .addGroup(jPanel_listaGimnasiosLayout.createSequentialGroup()
                         .addGroup(jPanel_listaGimnasiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel_listaGimnasiosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox_formato, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel_reg_pelicula)
                                 .addComponent(jLabel_reg_pelicula_id_prov)
                                 .addComponent(jLabel_reg_pelicula_id_prov1)
@@ -194,15 +198,15 @@ public class Interfaz extends javax.swing.JFrame {
                                 .addComponent(jLabel_reg_pelicula_audiencia)
                                 .addComponent(jLabel_reg_pelicula_formato)
                                 .addComponent(jTextField_reg_pelicula_id_prov)
-                                .addComponent(jTextField_reg_pelicula_id_prov1)
-                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField_reg_pelicula_nombre)
+                                .addComponent(jComboBox_categoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBox_audiencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton_anadir_pelicula, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
                             .addComponent(jLabel_remover_pelicula_id_prov)
                             .addComponent(jLabel_reg_pelicula_id_prov3)
                             .addComponent(jTextField_remover_pelicula_id_prov, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel_error_remover_pelicula))
-                        .addGap(0, 295, Short.MAX_VALUE)))
+                            .addComponent(jButton_remover_pelicula, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 460, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_listaGimnasiosLayout.setVerticalGroup(
@@ -217,19 +221,19 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel_reg_pelicula_id_prov1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_reg_pelicula_id_prov1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextField_reg_pelicula_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel_reg_pelicula_categ)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox_categoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(jLabel_reg_pelicula_audiencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox_audiencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
                 .addComponent(jLabel_reg_pelicula_formato)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBox_formato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton_anadir_pelicula)
                 .addGap(18, 18, 18)
@@ -241,8 +245,8 @@ public class Interfaz extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_remover_pelicula_id_prov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel_error_remover_pelicula)
-                .addContainerGap(181, Short.MAX_VALUE))
+                .addComponent(jButton_remover_pelicula)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Películas", jPanel_listaGimnasios);
@@ -309,22 +313,49 @@ public class Interfaz extends javax.swing.JFrame {
         String descripcion = jTextField_descripcion_proveedor.getText();
         System.out.print(descripcion);
         if (descripcion.equals("")) {
-            jLabel_error_desc_proveedor.setVisible(true);
+            JOptionPane.showMessageDialog(rootPane, "Error: Debe ingresar una descripción válida.", "Mensaje", HEIGHT);
             
         } else {
             Proveedor proveedor = new Proveedor(descripcion);
             aplicacion.anadirProveedor(proveedor);
-            jTextField_descripcion_proveedor.setText("");
-            jLabel_error_desc_proveedor.setVisible(false);
-            
+            jTextField_descripcion_proveedor.setText("");           
             aplicacion.imprimirProveedores();
+            JOptionPane.showMessageDialog(rootPane, "Proveedor " + descripcion + " registrado con éxito.", "Mensaje", HEIGHT);
         }
     }//GEN-LAST:event_jButton_reg_proveedorMouseClicked
 
     private void jButton_eliminar_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_eliminar_proveedorMouseClicked
         aplicacion.removerProveedor();
-        System.out.println("Proveedor borrado con éxito.");
+        JOptionPane.showMessageDialog(rootPane, "Proveedor borrado con éxito.", "Mensaje", HEIGHT);
     }//GEN-LAST:event_jButton_eliminar_proveedorMouseClicked
+
+    private void jButton_anadir_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_peliculaMouseClicked
+        int idProveedor = Integer.parseInt(jTextField_reg_pelicula_id_prov.getText());
+        String nombre = jTextField_reg_pelicula_nombre.getText();
+
+        if (idProveedor <= 0) {
+            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un ID del proveedor existente.", "Mensaje", HEIGHT);
+        } else {
+            try {
+                String categoria = jComboBox_categoria.getSelectedItem().toString();
+                String audiencia = jComboBox_audiencia.getSelectedItem().toString();
+                String formato = jComboBox_formato.getSelectedItem().toString();
+                Pelicula pelicula = new Pelicula(nombre, categoria, audiencia, formato);
+                aplicacion.anadirPelicula(idProveedor, pelicula);
+                JOptionPane.showMessageDialog(rootPane, "Película registrada con éxito.", "Mensaje", HEIGHT);
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Error: verifique que el ID del proveedor y el nombre de la película sean válidos.", "Mensaje", HEIGHT);
+            }
+        }
+        
+        jTextField_reg_pelicula_nombre.setText("");
+    }//GEN-LAST:event_jButton_anadir_peliculaMouseClicked
+
+    private void jButton_remover_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_remover_peliculaMouseClicked
+        int id = Integer.parseInt(jTextField_remover_pelicula_id_prov.getText());
+        aplicacion.removerPelicula(id);
+        JOptionPane.showMessageDialog(rootPane, "Película eliminada.", "Mensaje", HEIGHT);
+    }//GEN-LAST:event_jButton_remover_peliculaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -365,14 +396,13 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JButton jButton_anadir_pelicula;
     private javax.swing.JButton jButton_eliminar_proveedor;
     private javax.swing.JButton jButton_reg_proveedor;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JButton jButton_remover_pelicula;
+    private javax.swing.JComboBox<String> jComboBox_audiencia;
+    private javax.swing.JComboBox<String> jComboBox_categoria;
+    private javax.swing.JComboBox<String> jComboBox_formato;
     private javax.swing.JLabel jLabel_desc_proveedor;
     private javax.swing.JLabel jLabel_eliminar_proveedor;
-    private javax.swing.JLabel jLabel_error_desc_proveedor;
     private javax.swing.JLabel jLabel_error_elim_proveedor;
-    private javax.swing.JLabel jLabel_error_remover_pelicula;
     private javax.swing.JLabel jLabel_reg_pelicula;
     private javax.swing.JLabel jLabel_reg_pelicula_audiencia;
     private javax.swing.JLabel jLabel_reg_pelicula_categ;
@@ -393,7 +423,7 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField_descripcion_proveedor;
     private javax.swing.JTextField jTextField_reg_pelicula_id_prov;
-    private javax.swing.JTextField jTextField_reg_pelicula_id_prov1;
+    private javax.swing.JTextField jTextField_reg_pelicula_nombre;
     private javax.swing.JTextField jTextField_remover_pelicula_id_prov;
     // End of variables declaration//GEN-END:variables
 }
