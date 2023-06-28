@@ -112,4 +112,8 @@ public class Aplicacion {
         }
         System.out.println("Proveedor no encontrado");
     }
+    
+    public Proveedor[] getProveedores() {
+        return proveedores;
+    }
 }

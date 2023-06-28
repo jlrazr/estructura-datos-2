@@ -1,9 +1,5 @@
-
-import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /*
  * @author Jose Luis Mora
@@ -12,12 +8,39 @@ public class Interfaz extends javax.swing.JFrame {
     
     // Inicializa la clase Aplicación que contiene los métodos para la manipulación de datos
     Aplicacion aplicacion = new Aplicacion();
+    DefaultListModel<String> providerListModel;
+    DefaultListModel<String> movieListModel;
 
     /**
      * Creates new form MainUIFrame
      */
     public Interfaz() {
         initComponents();
+        providerListModel = new DefaultListModel<>();
+        jList_proveedores.setModel(providerListModel); // Assuming jList1 is the JList for providers.
+
+        movieListModel = new DefaultListModel<>();
+        jList_peliculas.setModel(movieListModel); // Assuming jList2 is the JList for movies.
+
+        jList_proveedores.addListSelectionListener(e -> actualizaListaPeliculas());
+    }
+    
+    private void actualizaListaProveedores() {
+    providerListModel.clear();
+    for (Proveedor provider : aplicacion.getProveedores()) {
+        providerListModel.addElement(provider.getDescripcion());
+    }
+}
+
+    private void actualizaListaPeliculas() {
+        movieListModel.clear();
+        int selectedIndex = jList_proveedores.getSelectedIndex();
+        if (selectedIndex != -1) {
+            Proveedor selectedProvider = aplicacion.getProveedores()[selectedIndex];
+            for (int i = selectedProvider.getCabeza(); i <= selectedProvider.getCola(); i++) {
+                movieListModel.addElement(selectedProvider.getListaPeliculas()[i].getNombre());
+            }
+        }
     }
 
     /**
@@ -38,7 +61,6 @@ public class Interfaz extends javax.swing.JFrame {
         jButton_reg_proveedor = new javax.swing.JButton();
         jButton_eliminar_proveedor = new javax.swing.JButton();
         jLabel_eliminar_proveedor = new javax.swing.JLabel();
-        jLabel_error_elim_proveedor = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel_listaGimnasios = new javax.swing.JPanel();
         jLabel_reg_pelicula = new javax.swing.JLabel();
@@ -60,7 +82,10 @@ public class Interfaz extends javax.swing.JFrame {
         jButton_remover_pelicula = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        jList_proveedores = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList_peliculas = new javax.swing.JList<>();
+        jLabel_reg_pelicula_id_prov2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,9 +120,6 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel_eliminar_proveedor.setText("Eliminar el último proveedor añadido");
 
-        jLabel_error_elim_proveedor.setText("Error: Debe eliminar todas las películas relacionadas con el proveedor antes de eliminar el proveedor.");
-        jLabel_error_elim_proveedor.setVisible(false);
-
         javax.swing.GroupLayout jPanel_anadirGimnasioLayout = new javax.swing.GroupLayout(jPanel_anadirGimnasio);
         jPanel_anadirGimnasio.setLayout(jPanel_anadirGimnasioLayout);
         jPanel_anadirGimnasioLayout.setHorizontalGroup(
@@ -114,9 +136,8 @@ public class Interfaz extends javax.swing.JFrame {
                                 .addComponent(jLabel_desc_proveedor, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jButton_reg_proveedor, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextField_descripcion_proveedor, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jLabel_eliminar_proveedor)
-                            .addComponent(jLabel_error_elim_proveedor))
-                        .addGap(0, 159, Short.MAX_VALUE)))
+                            .addComponent(jLabel_eliminar_proveedor))
+                        .addGap(0, 477, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel_anadirGimnasioLayout.setVerticalGroup(
@@ -136,9 +157,7 @@ public class Interfaz extends javax.swing.JFrame {
                 .addComponent(jLabel_eliminar_proveedor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_eliminar_proveedor)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel_error_elim_proveedor)
-                .addContainerGap(410, Short.MAX_VALUE))
+                .addContainerGap(455, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Proveedores", jPanel_anadirGimnasio);
@@ -251,25 +270,30 @@ public class Interfaz extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Películas", jPanel_listaGimnasios);
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(jList_proveedores);
+
+        jScrollPane3.setViewportView(jList_peliculas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 660, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 350, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 332, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2)
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE))
         );
+
+        jLabel_reg_pelicula_id_prov2.setText("Seleccione un proveedor para ver las películas que contiene");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -281,14 +305,18 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jLabel_tituloPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_reg_pelicula_id_prov2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_tituloPrincipal)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_tituloPrincipal)
+                    .addComponent(jLabel_reg_pelicula_id_prov2))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -320,13 +348,14 @@ public class Interfaz extends javax.swing.JFrame {
             aplicacion.anadirProveedor(proveedor);
             jTextField_descripcion_proveedor.setText("");           
             aplicacion.imprimirProveedores();
-            JOptionPane.showMessageDialog(rootPane, "Proveedor " + descripcion + " registrado con éxito.", "Mensaje", HEIGHT);
+            actualizaListaProveedores();
         }
     }//GEN-LAST:event_jButton_reg_proveedorMouseClicked
 
     private void jButton_eliminar_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_eliminar_proveedorMouseClicked
         aplicacion.removerProveedor();
         JOptionPane.showMessageDialog(rootPane, "Proveedor borrado con éxito.", "Mensaje", HEIGHT);
+        actualizaListaProveedores();
     }//GEN-LAST:event_jButton_eliminar_proveedorMouseClicked
 
     private void jButton_anadir_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_peliculaMouseClicked
@@ -342,7 +371,8 @@ public class Interfaz extends javax.swing.JFrame {
                 String formato = jComboBox_formato.getSelectedItem().toString();
                 Pelicula pelicula = new Pelicula(nombre, categoria, audiencia, formato);
                 aplicacion.anadirPelicula(idProveedor, pelicula);
-                JOptionPane.showMessageDialog(rootPane, "Película registrada con éxito.", "Mensaje", HEIGHT);
+                actualizaListaPeliculas();
+                JOptionPane.showMessageDialog(rootPane, "Película añadida. Seleccione el proveedor en la lista para ver sus películas", "Mensaje", HEIGHT);
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(rootPane, "Error: verifique que el ID del proveedor y el nombre de la película sean válidos.", "Mensaje", HEIGHT);
             }
@@ -355,6 +385,7 @@ public class Interfaz extends javax.swing.JFrame {
         int id = Integer.parseInt(jTextField_remover_pelicula_id_prov.getText());
         aplicacion.removerPelicula(id);
         JOptionPane.showMessageDialog(rootPane, "Película eliminada.", "Mensaje", HEIGHT);
+        actualizaListaPeliculas();
     }//GEN-LAST:event_jButton_remover_peliculaMouseClicked
 
     /**
@@ -402,22 +433,24 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox_formato;
     private javax.swing.JLabel jLabel_desc_proveedor;
     private javax.swing.JLabel jLabel_eliminar_proveedor;
-    private javax.swing.JLabel jLabel_error_elim_proveedor;
     private javax.swing.JLabel jLabel_reg_pelicula;
     private javax.swing.JLabel jLabel_reg_pelicula_audiencia;
     private javax.swing.JLabel jLabel_reg_pelicula_categ;
     private javax.swing.JLabel jLabel_reg_pelicula_formato;
     private javax.swing.JLabel jLabel_reg_pelicula_id_prov;
     private javax.swing.JLabel jLabel_reg_pelicula_id_prov1;
+    private javax.swing.JLabel jLabel_reg_pelicula_id_prov2;
     private javax.swing.JLabel jLabel_reg_pelicula_id_prov3;
     private javax.swing.JLabel jLabel_reg_proveedor;
     private javax.swing.JLabel jLabel_remover_pelicula_id_prov;
     private javax.swing.JLabel jLabel_tituloPrincipal;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<String> jList_peliculas;
+    private javax.swing.JList<String> jList_proveedores;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel_anadirGimnasio;
     private javax.swing.JPanel jPanel_listaGimnasios;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane1;
