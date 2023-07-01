@@ -8,37 +8,37 @@ public class Interfaz extends javax.swing.JFrame {
     
     // Inicializa la clase Aplicación que contiene los métodos para la manipulación de datos
     Aplicacion aplicacion = new Aplicacion();
-    DefaultListModel<String> providerListModel;
-    DefaultListModel<String> movieListModel;
+    DefaultListModel<String> modeloListaProveedores;
+    DefaultListModel<String> modeloListaPeliculas;
 
     /**
      * Creates new form MainUIFrame
      */
     public Interfaz() {
         initComponents();
-        providerListModel = new DefaultListModel<>();
-        jList_proveedores.setModel(providerListModel);
+        modeloListaProveedores = new DefaultListModel<>();
+        jList_proveedores.setModel(modeloListaProveedores);
 
-        movieListModel = new DefaultListModel<>();
-        jList_peliculas.setModel(movieListModel);
+        modeloListaPeliculas = new DefaultListModel<>();
+        jList_peliculas.setModel(modeloListaPeliculas);
 
         jList_proveedores.addListSelectionListener(e -> actualizaListaPeliculas());
     }
     
     private void actualizaListaProveedores() {
-    providerListModel.clear();
+    modeloListaProveedores.clear();
     for (Proveedor provider : aplicacion.getProveedores()) {
-        providerListModel.addElement("ID: " + provider.getId() + " | Descripción: " + provider.getDescripcion());
+        modeloListaProveedores.addElement("ID: " + provider.getId() + " | Descripción: " + provider.getDescripcion());
     }
 }
 
     private void actualizaListaPeliculas() {
-        movieListModel.clear();
+        modeloListaPeliculas.clear();
         int selectedIndex = jList_proveedores.getSelectedIndex();
         if (selectedIndex != -1) {
             Proveedor selectedProvider = aplicacion.getProveedores()[selectedIndex];
             for (int i = selectedProvider.getCabeza(); i <= selectedProvider.getCola(); i++) {
-                movieListModel.addElement("ID: " + selectedProvider.getListaPeliculas()[i].getId() + " | Nombre: " + selectedProvider.getListaPeliculas()[i].getNombre());
+                modeloListaPeliculas.addElement("ID: " + selectedProvider.getListaPeliculas()[i].getId() + " | Nombre: " + selectedProvider.getListaPeliculas()[i].getNombre());
             }
         }
     }
@@ -353,39 +353,53 @@ public class Interfaz extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton_reg_proveedorMouseClicked
 
     private void jButton_eliminar_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_eliminar_proveedorMouseClicked
-        aplicacion.removerProveedor();
-        JOptionPane.showMessageDialog(rootPane, "Proveedor borrado con éxito.", "Mensaje", HEIGHT);
-        actualizaListaProveedores();
+        if(aplicacion.removerProveedor() == 1) {
+            JOptionPane.showMessageDialog(rootPane, "Proveedor borrado con éxito.", "Mensaje", HEIGHT);
+            actualizaListaProveedores();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No hay proveedores para remover.", "Mensaje", HEIGHT);
+        }
     }//GEN-LAST:event_jButton_eliminar_proveedorMouseClicked
 
     private void jButton_anadir_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_anadir_peliculaMouseClicked
-        int idProveedor = Integer.parseInt(jTextField_reg_pelicula_id_prov.getText());
+        int idProveedor = 0;
+        if(!jTextField_reg_pelicula_id_prov.getText().isEmpty()) {
+            idProveedor = Integer.parseInt(jTextField_reg_pelicula_id_prov.getText());
+        }
         String nombre = jTextField_reg_pelicula_nombre.getText();
 
-        if (idProveedor <= 0) {
-            JOptionPane.showMessageDialog(rootPane, "Debe ingresar un ID del proveedor existente.", "Mensaje", HEIGHT);
+        if (idProveedor <= 0 || nombre.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Error: verifique el ID del proveedor y el nombre de la película.", "Mensaje", HEIGHT);
         } else {
-            try {
-                String categoria = jComboBox_categoria.getSelectedItem().toString();
-                String audiencia = jComboBox_audiencia.getSelectedItem().toString();
-                String formato = jComboBox_formato.getSelectedItem().toString();
-                Pelicula pelicula = new Pelicula(nombre, categoria, audiencia, formato);
-                aplicacion.anadirPelicula(idProveedor, pelicula);
+            String categoria = jComboBox_categoria.getSelectedItem().toString();
+            String audiencia = jComboBox_audiencia.getSelectedItem().toString();
+            String formato = jComboBox_formato.getSelectedItem().toString();
+            Pelicula pelicula = new Pelicula(nombre, categoria, audiencia, formato);
+
+            if (aplicacion.anadirPelicula(idProveedor, pelicula) == 1) {
                 actualizaListaPeliculas();
                 JOptionPane.showMessageDialog(rootPane, "Película añadida. Seleccione el proveedor en la lista para ver sus películas", "Mensaje", HEIGHT);
-            } catch(Exception e) {
+            } else {
                 JOptionPane.showMessageDialog(rootPane, "Error: verifique que el ID del proveedor y el nombre de la película sean válidos.", "Mensaje", HEIGHT);
-            }
+            }                
         }
-        
+
         jTextField_reg_pelicula_nombre.setText("");
     }//GEN-LAST:event_jButton_anadir_peliculaMouseClicked
 
     private void jButton_remover_peliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_remover_peliculaMouseClicked
         int id = Integer.parseInt(jTextField_remover_pelicula_id_prov.getText());
-        aplicacion.removerPelicula(id);
-        JOptionPane.showMessageDialog(rootPane, "Película eliminada.", "Mensaje", HEIGHT);
-        actualizaListaPeliculas();
+        
+        if(aplicacion.removerPelicula(id) == 1) {
+            aplicacion.removerPelicula(id);
+            JOptionPane.showMessageDialog(rootPane, "Película eliminada.", "Mensaje", HEIGHT);
+            actualizaListaPeliculas();
+        } else if(aplicacion.removerPelicula(id) == 2) {
+            JOptionPane.showMessageDialog(rootPane, "Proveedor no encontrado. Verifique el ID del proveedor.", "Mensaje", HEIGHT);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "No hay películas que remover.", "Mensaje", HEIGHT);
+        }
+        
     }//GEN-LAST:event_jButton_remover_peliculaMouseClicked
 
     /**

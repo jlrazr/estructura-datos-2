@@ -17,23 +17,23 @@ public class Aplicacion {
         proveedores[++top] = proveedor; // Añade el nuevo proveedor
     }
 
-    public void removerProveedor() {
+    public int removerProveedor() {
         // Revisa si la pila está vacía
         if(top < 0) {
-            System.out.println("No hay proveedores para remover");
-            return;
+            return 0;
         }
 
         // Revisa si el proveedor tiene películas en su lista
         if(proveedores[top].getCabeza() != -1) {
             System.out.println("Debe remover todas las películas del proveedor antes de eliminarlo");
-            return;
+            return 1;
         }
 
         proveedores[top--] = null; // Remueve el proveedor en el top de la pila
+        return 1;
     }
 
-    public void anadirPelicula(int IdProveedor, Pelicula pelicula) {
+    public int anadirPelicula(int IdProveedor, Pelicula pelicula) {
         for(int i = 0; i <= top; i++) {
             if(proveedores[i].getId() == IdProveedor) {
                 // Revisa si la cola está llena e incrementa su tamaño de ser el caso
@@ -53,20 +53,21 @@ public class Aplicacion {
                 if(proveedores[i].getCabeza() == -1) {
                     proveedores[i].setCabeza(0);
                 }
-                return;
+                return 1;
             }
         }
 
-        System.out.println("Proveedor no encontrado");
+        // Proveedor no encontrado
+        return 0;
     }
 
-    public void removerPelicula(int idProveedor) {
+    public int removerPelicula(int idProveedor) {
         for(int i = 0; i <= top; i++) {
             if(proveedores[i].getId() == idProveedor) {
                 // Revisa si la cola está vacía
                 if(proveedores[i].getCabeza() == -1) {
                     System.out.println("No hay películas para remover");
-                    return;
+                    return 0;
                 }
 
                 proveedores[i].getListaPeliculas()[proveedores[i].getCabeza()] = null; // Remueve la película en la posición "cabeza" o top
@@ -80,11 +81,12 @@ public class Aplicacion {
                     proveedores[i].setCabeza(proveedores[i].getCabeza() + 1);
                 }
 
-                return;
+                return 1;
             }
         }
 
-        System.out.println("Proveedor no encontrado");
+        // Proveedor no encontrado
+        return 2;
     }
     
     public void imprimirProveedores() {
