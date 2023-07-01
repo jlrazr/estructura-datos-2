@@ -17,10 +17,10 @@ public class Interfaz extends javax.swing.JFrame {
     public Interfaz() {
         initComponents();
         providerListModel = new DefaultListModel<>();
-        jList_proveedores.setModel(providerListModel); // Assuming jList1 is the JList for providers.
+        jList_proveedores.setModel(providerListModel);
 
         movieListModel = new DefaultListModel<>();
-        jList_peliculas.setModel(movieListModel); // Assuming jList2 is the JList for movies.
+        jList_peliculas.setModel(movieListModel);
 
         jList_proveedores.addListSelectionListener(e -> actualizaListaPeliculas());
     }
@@ -28,7 +28,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void actualizaListaProveedores() {
     providerListModel.clear();
     for (Proveedor provider : aplicacion.getProveedores()) {
-        providerListModel.addElement(provider.getDescripcion());
+        providerListModel.addElement("ID: " + provider.getId() + " | Descripción: " + provider.getDescripcion());
     }
 }
 
@@ -38,7 +38,7 @@ public class Interfaz extends javax.swing.JFrame {
         if (selectedIndex != -1) {
             Proveedor selectedProvider = aplicacion.getProveedores()[selectedIndex];
             for (int i = selectedProvider.getCabeza(); i <= selectedProvider.getCola(); i++) {
-                movieListModel.addElement(selectedProvider.getListaPeliculas()[i].getNombre());
+                movieListModel.addElement("ID: " + selectedProvider.getListaPeliculas()[i].getId() + " | Nombre: " + selectedProvider.getListaPeliculas()[i].getNombre());
             }
         }
     }
