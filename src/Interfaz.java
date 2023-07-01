@@ -86,10 +86,12 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jList_peliculas = new javax.swing.JList<>();
         jLabel_reg_pelicula_id_prov2 = new javax.swing.JLabel();
+        jLabel_lista_prov = new javax.swing.JLabel();
+        jLabel_lista_peliculas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel_tituloPrincipal.setText("Asociación Nacional de Gimnasios y Centros de Salud");
+        jLabel_tituloPrincipal.setText("Registro de proveedores de servicios de Streaming");
 
         jTabbedPane1.setName(""); // NOI18N
         jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -295,6 +297,10 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel_reg_pelicula_id_prov2.setText("Seleccione un proveedor para ver las películas que contiene");
 
+        jLabel_lista_prov.setText("Lista de proveedores");
+
+        jLabel_lista_peliculas.setText("Lista de películas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -306,8 +312,15 @@ public class Interfaz extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_reg_pelicula_id_prov2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel_reg_pelicula_id_prov2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel_lista_prov)
+                                .addGap(231, 231, 231)
+                                .addComponent(jLabel_lista_peliculas)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -317,13 +330,15 @@ public class Interfaz extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_tituloPrincipal)
                     .addComponent(jLabel_reg_pelicula_id_prov2))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTabbedPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel_lista_prov)
+                            .addComponent(jLabel_lista_peliculas))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1))
                 .addContainerGap())
         );
 
@@ -347,7 +362,6 @@ public class Interfaz extends javax.swing.JFrame {
             Proveedor proveedor = new Proveedor(descripcion);
             aplicacion.anadirProveedor(proveedor);
             jTextField_descripcion_proveedor.setText("");           
-            aplicacion.imprimirProveedores();
             actualizaListaProveedores();
         }
     }//GEN-LAST:event_jButton_reg_proveedorMouseClicked
@@ -391,7 +405,6 @@ public class Interfaz extends javax.swing.JFrame {
         int id = Integer.parseInt(jTextField_remover_pelicula_id_prov.getText());
         
         if(aplicacion.removerPelicula(id) == 1) {
-            aplicacion.removerPelicula(id);
             JOptionPane.showMessageDialog(rootPane, "Película eliminada.", "Mensaje", HEIGHT);
             actualizaListaPeliculas();
         } else if(aplicacion.removerPelicula(id) == 2) {
@@ -447,6 +460,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox_formato;
     private javax.swing.JLabel jLabel_desc_proveedor;
     private javax.swing.JLabel jLabel_eliminar_proveedor;
+    private javax.swing.JLabel jLabel_lista_peliculas;
+    private javax.swing.JLabel jLabel_lista_prov;
     private javax.swing.JLabel jLabel_reg_pelicula;
     private javax.swing.JLabel jLabel_reg_pelicula_audiencia;
     private javax.swing.JLabel jLabel_reg_pelicula_categ;

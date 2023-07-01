@@ -88,33 +88,7 @@ public class Aplicacion {
         // Proveedor no encontrado
         return 2;
     }
-    
-    public void imprimirProveedores() {
-        if(top < 0) {
-            System.out.println("No hay proveedores registrados");
-            return;
-        }
-        for(int i = 0; i <= top; i++) {
-            System.out.println(proveedores[i]);
-        }
-    }
-
-    public void imprimirPeliculasDelProveedor(int idProveedor) {
-        for(int i = 0; i <= top; i++) {
-            if(proveedores[i].getId() == idProveedor) {
-                if(proveedores[i].getCabeza() == -1) {
-                    System.out.println("El proveedor no tiene películas registradas");
-                    return;
-                }
-                for(int j = proveedores[i].getCabeza(); j <= proveedores[i].getCola(); j++) {
-                    System.out.println(proveedores[i].getListaPeliculas()[j]);
-                }
-                return;
-            }
-        }
-        System.out.println("Proveedor no encontrado");
-    }
-    
+   
     public Proveedor[] getProveedores() {
         return proveedores;
     }
