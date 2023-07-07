@@ -25,8 +25,7 @@ public class Aplicacion {
 
         // Revisa si el proveedor tiene películas en su lista
         if(proveedores[top].getCabeza() != -1) {
-            System.out.println("Debe remover todas las películas del proveedor antes de eliminarlo");
-            return 1;
+            return 2;
         }
 
         proveedores[top--] = null; // Remueve el proveedor en el top de la pila

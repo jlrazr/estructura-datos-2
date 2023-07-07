@@ -27,8 +27,8 @@ public class Interfaz extends javax.swing.JFrame {
     
     private void actualizaListaProveedores() {
     modeloListaProveedores.clear();
-    for (Proveedor provider : aplicacion.getProveedores()) {
-        modeloListaProveedores.addElement("ID: " + provider.getId() + " | Descripción: " + provider.getDescripcion());
+    for (Proveedor proveedor : aplicacion.getProveedores()) {
+        modeloListaProveedores.addElement("ID: " + proveedor.getId() + " | Descripción: " + proveedor.getDescripcion());
     }
 }
 
@@ -36,10 +36,13 @@ public class Interfaz extends javax.swing.JFrame {
         modeloListaPeliculas.clear();
         int selectedIndex = jList_proveedores.getSelectedIndex();
         if (selectedIndex != -1) {
-            Proveedor selectedProvider = aplicacion.getProveedores()[selectedIndex];
-            for (int i = selectedProvider.getCabeza(); i <= selectedProvider.getCola(); i++) {
-                modeloListaPeliculas.addElement("ID: " + selectedProvider.getListaPeliculas()[i].getId() + " | Nombre: " + selectedProvider.getListaPeliculas()[i].getNombre());
+            Proveedor proveedorSeleccionado = aplicacion.getProveedores()[selectedIndex];
+            if (proveedorSeleccionado.getListaPeliculas()[0] != null) {
+                for (int i = proveedorSeleccionado.getCabeza(); i <= proveedorSeleccionado.getCola(); i++) {
+                    modeloListaPeliculas.addElement("ID: " + proveedorSeleccionado.getListaPeliculas()[i].getId() + " | Nombre: " + proveedorSeleccionado.getListaPeliculas()[i].getNombre());
+                }
             }
+            
         }
     }
 
@@ -354,7 +357,7 @@ public class Interfaz extends javax.swing.JFrame {
 
     private void jButton_reg_proveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_reg_proveedorMouseClicked
         String descripcion = jTextField_descripcion_proveedor.getText();
-        System.out.print(descripcion);
+
         if (descripcion.equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Error: Debe ingresar una descripción válida.", "Mensaje", HEIGHT);
             
@@ -370,6 +373,8 @@ public class Interfaz extends javax.swing.JFrame {
         if(aplicacion.removerProveedor() == 1) {
             JOptionPane.showMessageDialog(rootPane, "Proveedor borrado con éxito.", "Mensaje", HEIGHT);
             actualizaListaProveedores();
+        } else if(aplicacion.removerProveedor() == 2) {
+            JOptionPane.showMessageDialog(rootPane, "Debe remover todas las películas del proveedor antes de eliminar el proveedor.", "Mensaje", HEIGHT);
         } else {
             JOptionPane.showMessageDialog(rootPane, "No hay proveedores para remover.", "Mensaje", HEIGHT);
         }
