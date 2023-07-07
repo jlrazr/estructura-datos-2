@@ -28,7 +28,9 @@ public class Interfaz extends javax.swing.JFrame {
     private void actualizaListaProveedores() {
     modeloListaProveedores.clear();
     for (Proveedor proveedor : aplicacion.getProveedores()) {
-        modeloListaProveedores.addElement("ID: " + proveedor.getId() + " | Descripción: " + proveedor.getDescripcion());
+        if (proveedor != null) {
+            modeloListaProveedores.addElement("ID: " + proveedor.getId() + " | Descripción: " + proveedor.getDescripcion());
+        }
     }
 }
 
@@ -398,6 +400,7 @@ public class Interfaz extends javax.swing.JFrame {
             if (aplicacion.anadirPelicula(idProveedor, pelicula) == 1) {
                 actualizaListaPeliculas();
                 JOptionPane.showMessageDialog(rootPane, "Película añadida. Seleccione el proveedor en la lista para ver sus películas", "Mensaje", HEIGHT);
+                jTextField_reg_pelicula_id_prov.setText("");
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Error: verifique que el ID del proveedor y el nombre de la película sean válidos.", "Mensaje", HEIGHT);
             }                
@@ -412,6 +415,7 @@ public class Interfaz extends javax.swing.JFrame {
         if(aplicacion.removerPelicula(id) == 1) {
             JOptionPane.showMessageDialog(rootPane, "Película eliminada.", "Mensaje", HEIGHT);
             actualizaListaPeliculas();
+            jTextField_remover_pelicula_id_prov.setText("");
         } else if(aplicacion.removerPelicula(id) == 2) {
             JOptionPane.showMessageDialog(rootPane, "Proveedor no encontrado. Verifique el ID del proveedor.", "Mensaje", HEIGHT);
         } else {
